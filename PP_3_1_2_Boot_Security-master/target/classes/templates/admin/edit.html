@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit User</title>
+    <style>
+        .form-group { margin-bottom: 15px; }
+        label { display: inline-block; width: 100px; }
+        input, select { padding: 5px; width: 200px; }
+        .checkbox-group { margin: 10px 0; }
+    </style>
+</head>
+<body>
+<h1>Edit User</h1>
+
+<form th:action="@{/admin/save}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" th:field="*{name}" id="name" required/>
+    </div>
+
+    <div class="form-group">
+        <label for="surname">Surname:</label>
+        <input type="text" th:field="*{surname}" id="surname" required/>
+    </div>
+
+    <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="number" th:field="*{age}" id="age" min="1" max="120" required/>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" th:field="*{email}" id="email" required/>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" th:field="*{password}" id="password"/>
+        <div class="hint">(Оставьте пустым, если не хотите менять пароль)</div>
+    </div>
+
+    <div class="form-group">
+        <label>Roles:</label>
+        <div class="checkbox-group">
+            <div th:each="role : ${allRoles}">
+                <input type="checkbox" th:value="${role.id}" name="roleIds"
+                       th:id="${'role_' + role.id}"
+                       th:checked="${#lists.contains(user.roles, role)}"/>
+                <label th:for="${'role_' + role.id}" th:text="${role.name}"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit">Update</button>
+        <a th:href="@{/admin}">Cancel</a>
+    </div>
+</form>
+</body>
+</html>

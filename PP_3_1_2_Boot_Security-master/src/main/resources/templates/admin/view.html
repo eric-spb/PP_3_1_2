@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .user-card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .user-details {
+            margin-bottom: 25px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .detail-value {
+            color: #333;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-edit {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #45a049;
+        }
+
+        .btn-delete {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #da190b;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="user-card">
+        <h2>👤 User Profile</h2>
+
+        <div class="user-details">
+            <div class="detail-row">
+                <span class="detail-label">ID:</span>
+                <span class="detail-value" th:text="${person.id}">-</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Name:</span>
+                <span class="detail-value" th:text="${person.name}">-</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Email:</span>
+                <span class="detail-value" th:text="${person.email}">-</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Age:</span>
+                <span class="detail-value" th:text="${person.age}">-</span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <form th:action="@{/admin/edit/{id}(id=${person.id})}" method="get" style="flex: 1;">
+                <button type="submit" class="btn btn-edit">Edit</button>
+            </form>
+
+            <form th:action="@{/admin/delete/{id}(id=${person.id})}" method="post" style="flex: 1;">
+                <button type="submit" class="btn btn-delete"
+                        onclick="return confirm('Delete this user?')">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .card { background: #f5f5f5; padding: 20px; border-radius: 10px; }
+        .info-item { margin: 10px 0; padding: 10px; background: white; border-radius: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>👤 User Profile</h1>
+
+    <p th:class="${message.contains('success')} ? 'success' : 'error'"
+       th:text="${message}">Status</p>
+
+    <div th:if="${user}">
+        <div class="info-item">
+            <strong>ID:</strong>
+            <span th:text="${user.id} ?: 'NULL'" th:style="${user.id} ? '' : 'color: red;'">-</span>
+        </div>
+        <div class="info-item">
+            <strong>Name:</strong>
+            <span th:text="${user.name} ?: 'NULL'" th:style="${user.name} ? '' : 'color: red;'">-</span>
+        </div>
+        <div class="info-item">
+            <strong>Email:</strong>
+            <span th:text="${user.email} ?: 'NULL'" th:style="${user.email} ? '' : 'color: red;'">-</span>
+        </div>
+        <div class="info-item">
+            <strong>Age:</strong>
+            <span th:text="${user.age} ?: 'NULL'" th:style="${user.age} ? '' : 'color: red;'">-</span>
+        </div>
+        <div class="info-item" th:if="${user.roles}">
+            <strong>Roles:</strong>
+            <span th:each="role : ${user.roles}"
+                  th:text="${role.name}">-</span>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <a href="/">🏠 Home</a> |
+        <form action="/logout" method="post" style="display: inline;">
+            <button type="submit">🚪 Logout</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
